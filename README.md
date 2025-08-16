@@ -27,8 +27,8 @@ Data Processing & Visualization: Pandas, Matplotlib, Plotly
 
 # Clone the repository
 ```sh
-git clone https://github.com/shivammourya17/AI-Data-Visualisation-Agent-.git
-cd AI-Data-Visualisation-Agent-
+git clone https://github.com/shivammourya17/AI-Data-Visualisation-Agent.git
+cd AI-Data-Visualisation-Agent
 ```
 
 # Create virtual environment
