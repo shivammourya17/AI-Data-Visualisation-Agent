@@ -1,60 +1,84 @@
-📊 AI Data Visualization Agent
+Perfect 👍 You already have solid content, it just needs a **structured, polished GitHub README format** with proper Markdown (headings, lists, code blocks, spacing). Here’s a ready-to-use version for your repo:
 
-This Streamlit-based application acts as an intelligent Data Visualization Assistant that interprets natural language queries and instantly produces meaningful visualizations using Large Language Models (LLMs).
+---
 
-🌟 Why This Project?
+# 📊 AI Data Visualization Agent
 
-The need for AI-driven data visualization tools is rapidly increasing as organizations look for quicker and more intuitive ways to analyze their data. Instead of writing code or learning complex BI platforms, users can simply type questions in plain English and receive instant insights through interactive charts and graphs.
+This **Streamlit-based application** acts as an intelligent **Data Visualization Assistant** that understands **natural language queries** and instantly generates meaningful visualizations using **Large Language Models (LLMs)**.
 
-This project aims to address that demand by providing an AI-powered visualization agent that can be easily integrated into existing data workflows.
+---
 
-🚀 Key Features
+## 🌟 Why This Project?
 
-📂 Upload CSV or Excel datasets directly.
+The demand for **AI-powered data visualization tools** is rapidly growing as organizations seek **faster and more intuitive** ways to analyze their data.
 
-💬 Query data using natural language.
-📊 Automatically generate bar charts, line graphs, scatter plots, and more.
-⚡ Powered by Together AI for natural language understanding.
-🔒 Runs code securely inside the E2B Sandbox environment.
-🖥️ Built with Streamlit for a smooth and interactive user experience.
+Instead of writing code or using complex BI tools, users can simply **ask questions in plain English** and get immediate insights through interactive charts and graphs.
 
-🛠️ Technology Stack
+This project delivers an **AI-powered visualization agent** that integrates seamlessly into existing data workflows.
 
-Frontend: Streamlit
-AI Models: Together AI
-Secure Execution: E2B Sandbox
-Data Processing & Visualization: Pandas, Matplotlib, Plotly
+---
 
+## 🚀 Key Features
 
-# Clone the repository
-```sh
+* 📂 Upload CSV or Excel datasets directly
+* 💬 Query data using natural language
+* 📊 Automatically generate bar charts, line graphs, scatter plots, and more
+* ⚡ Powered by **Together AI** for natural language understanding
+* 🔒 Runs code securely inside the **E2B Sandbox**
+* 🖥️ Built with **Streamlit** for an intuitive web interface
+
+---
+
+## 🛠️ Technology Stack
+
+* **Frontend:** Streamlit
+* **AI Models:** Together AI
+* **Secure Execution:** E2B Sandbox
+* **Data Processing & Visualization:** Pandas, Matplotlib, Plotly
+
+---
+
+## ⚡ Getting Started
+
+### 1️⃣ Clone the repository
+
+```bash
 git clone https://github.com/shivammourya17/AI-Data-Visualisation-Agent.git
 cd AI-Data-Visualisation-Agent
 ```
 
-# Create virtual environment
-```sh
+### 2️⃣ Create a virtual environment
+
+```bash
 python -m venv .venv
-source .venv/bin/activate   # For Linux/Mac
-.venv\Scripts\activate      # For Windows
+# Activate the environment
+source .venv/bin/activate   # Linux/Mac
+.venv\Scripts\activate      # Windows
 ```
 
-# Install dependencies
-```sh
+### 3️⃣ Install dependencies
+
+```bash
 pip install -r requirements.txt
 ```
 
-# Run the application
-```sh
+### 4️⃣ Run the application
+
+```bash
 streamlit run ai_data_visualisation_agent.py
 ```
 
-📌 Future Enhancements
+---
 
-Direct support for SQL and NoSQL databases.
-Ability to export visualizations into PDF or PowerPoint reports.
-Multi-user dashboards with authentication and personalized insights.
+## 📌 Future Enhancements
 
-✨ With this project, exploring data becomes as simple as asking a question.
+* 🔗 Direct integration with SQL and NoSQL databases
+* 📑 Export visualizations as **PDF or PowerPoint reports**
+* 👥 Multi-user dashboards with authentication and personalized insights
 
-Would you like me to also make it short and punchy (for GitHub front page), or keep it detailed like above?
+---
+
+✨ With this project, exploring data is as simple as **asking a question**.
+
+---
+
