@@ -11,6 +11,7 @@ This project aims to address that demand by providing an AI-powered visualizatio
 🚀 Key Features
 
 📂 Upload CSV or Excel datasets directly.
+
 💬 Query data using natural language.
 📊 Automatically generate bar charts, line graphs, scatter plots, and more.
 ⚡ Powered by Together AI for natural language understanding.
