@@ -26,20 +26,23 @@ st.set_page_config(
 )
 
 # ---------------- CODE EXECUTION ----------------
-def code_interpret(e2b_code_interpreter: Sandbox, code: str) -> Optional[List[Any]]:
+def code_interpret(e2b_code_interpreter: Sandbox, code: str):
     with st.spinner('⚡ Running code in E2B sandbox...'):
-        stdout_capture = io.StringIO()
-        stderr_capture = io.StringIO()
-
-        with contextlib.redirect_stdout(stdout_capture), contextlib.redirect_stderr(stderr_capture):
-            with warnings.catch_warnings():
-                warnings.simplefilter("ignore")
-                exec = e2b_code_interpreter.run_code(code)
+        exec = e2b_code_interpreter.run_code(code)
 
         if exec.error:
-            st.error(f"❌ Code execution failed: {exec.error}")
+            st.error(f"❌ Slow Internet Connection : ") 
             return None
-        return exec.results  
+
+        results = exec.results or []
+
+        # ✅ Always check for active matplotlib figures
+        figs = [plt.figure(i) for i in plt.get_fignums()]
+        if figs:
+            results.extend(figs)
+            plt.close('all')  # close after capturing
+
+        return results
 
 def match_code_blocks(llm_response: str) -> str:
     match = pattern.search(llm_response)
@@ -150,3 +153,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
