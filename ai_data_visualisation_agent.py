@@ -28,28 +28,18 @@ st.set_page_config(
 # ---------------- CODE EXECUTION ----------------
 def code_interpret(e2b_code_interpreter: Sandbox, code: str) -> Optional[List[Any]]:
     with st.spinner('⚡ Running code in E2B sandbox...'):
-        # Force code to save figures instead of plt.show()
-        wrapper = """
-import matplotlib.pyplot as plt
-import io, base64
+        stdout_capture = io.StringIO()
+        stderr_capture = io.StringIO()
 
-def _force_save_fig():
-    buf = io.BytesIO()
-    plt.savefig(buf, format="png")
-    buf.seek(0)
-    encoded = base64.b64encode(buf.read()).decode("utf-8")
-    print("###IMAGE###" + encoded)
-    buf.close()
+        with contextlib.redirect_stdout(stdout_capture), contextlib.redirect_stderr(stderr_capture):
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                exec = e2b_code_interpreter.run_code(code)
 
-"""
-        final_code = wrapper + "\n" + code + "\n" + "_force_save_fig()\n"
-
-        exec_result = e2b_code_interpreter.run_code(final_code)
-
-        if exec_result.error:
-            st.error(f"❌ Code execution failed: {exec_result.error}")
+        if exec.error:
+            st.error(f"❌ Code execution failed: {exec.error}")
             return None
-        return exec_result.results  
+        return exec.results  
 
 def match_code_blocks(llm_response: str) -> str:
     match = pattern.search(llm_response)
@@ -57,9 +47,9 @@ def match_code_blocks(llm_response: str) -> str:
 
 def chat_with_llm(e2b_code_interpreter: Sandbox, user_message: str, dataset_path: str) -> Tuple[Optional[List[Any]], str]:
     system_prompt = f"""You're a Python data scientist and data visualization expert. 
-You are given a dataset at path '{dataset_path}' and the user's query.
-Always generate charts using matplotlib/seaborn/plotly and save them with plt.savefig() 
-instead of just plt.show(). Always output visualizations or tables along with explanation."""
+You are given a dataset at path '{dataset_path}' and also the user's query.
+Always analyze and provide clear answers with charts or tables.
+Use the dataset path '{dataset_path}' when reading the CSV file."""
 
     messages = [
         {"role": "system", "content": system_prompt},
@@ -120,13 +110,15 @@ def main():
         df = pd.read_csv(uploaded_file)
 
         with st.expander("📑 Dataset Preview", expanded=True):
+            # ✅ CHANGE 1: Slider for preview instead of checkbox
             num_rows = st.slider("Select number of rows to preview:", 5, 50, 10, step=5)
             st.dataframe(df.head(num_rows))
 
+        # ✅ CHANGE 2: Removed metric cards (rows/columns)
         st.success("✅ Dataset loaded successfully")
 
         query = st.text_area("💬 Ask a question about your data",
-                             "Did dropout rates increase during the Covid years (2020–2021)?",
+                             "Can you compare the average cost for two people between different categories?",
                              height=100)
 
         if st.button("🚀 Analyze", use_container_width=True):
@@ -143,11 +135,14 @@ def main():
                     if code_results:
                         st.subheader("📊 Visualization / Results")
                         for result in code_results:
-                            # Handle base64 images
-                            if isinstance(result, str) and result.startswith("###IMAGE###"):
-                                png_data = base64.b64decode(result.replace("###IMAGE###", ""))
+                            if hasattr(result, 'png') and result.png:
+                                png_data = base64.b64decode(result.png)
                                 image = Image.open(BytesIO(png_data))
                                 st.image(image, caption="Generated Chart", use_container_width=True)
+                            elif hasattr(result, 'figure'):
+                                st.pyplot(result.figure)
+                            elif hasattr(result, 'show'):
+                                st.plotly_chart(result)
                             elif isinstance(result, (pd.DataFrame, pd.Series)):
                                 st.dataframe(result)
                             else:
